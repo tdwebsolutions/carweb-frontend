@@ -6,6 +6,7 @@ import GenerationSelect from "./components/GenerationSelect";
 import EngineSelect from "./components/EngineSelect";
 import EngineSpecs from "./components/EngineSpecs";
 import EngineChart from "./components/EngineChart";
+import DynoCurveChart from "./components/DynoCurveChart";
 
 interface Brand {
   id: number;
@@ -93,7 +94,7 @@ const App: React.FC = () => {
   // Fetch engines from API based on generation
   useEffect(() => {
     if (selectedGenerationId) {
-      axios.get(`/engines/generationid/${selectedGenerationId}`).then((res) => {
+      axios.get(`/engines/generation/${selectedGenerationId}`).then((res) => {
         setEngines(res.data);
         console.log("📦 Engines:", res.data);
         setSelectedEngineId(null);
@@ -146,6 +147,12 @@ const App: React.FC = () => {
         <>
           <EngineSpecs engine={selectedEngine} />
           <EngineChart
+            powerOriginal={selectedEngine.power_Original}
+            powerTuned={selectedEngine.power_Tuned}
+            torqueOriginal={selectedEngine.torque_Original}
+            torqueTuned={selectedEngine.torque_Tuned}
+          />
+          <DynoCurveChart
             powerOriginal={selectedEngine.power_Original}
             powerTuned={selectedEngine.power_Tuned}
             torqueOriginal={selectedEngine.torque_Original}
